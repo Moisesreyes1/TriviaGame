@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Florida Trivia</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<style>
+  html, body, #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+  }
+</style>
+<link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+<script src="https://js.arcgis.com/4.4/"></script>
+<script>
+require([
+  "esri/Map",
+  "esri/views/SceneView",
+  "dojo/domReady!"
+], function(Map, SceneView){
+  var map = new Map({
+    basemap: "streets",
+    ground: "world-elevation"
+  });
+  var view = new SceneView({
+    container: "viewDiv",     // Reference to the scene div created in step 5
+    map: map,                 // Reference to the map object created before the scene
+    scale: 10000000,          // Sets the initial scale to 1:50,000,000
+    center: [-81.51, 27.66]  // Sets the center point of view with lon/lat
+  });
+});
+</script>
+</head>
+<body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div id="wrapper">
+	<div class="content">
+		<h1>Florida Trivia</h1>
+		<div id="countdown"></div>
+		<div id="questions">
+			<button id="start">Start</button>
+		</div>
+	</div>
+</div>
+	
+	<div id="viewDiv"></div>
+
+      <div class="clearfix">
+      <footer>
+        &copy; Copyright 2017 Moises Reyes
+      </footer>
+    </div>
+
+<script type="text/javascript" src="assets/javascript/app.js"></script>
+</body>
+</html>

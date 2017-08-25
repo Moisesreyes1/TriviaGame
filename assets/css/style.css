@@ -1,0 +1,40 @@
+body {
+	background: black;
+	width: 100%;
+	}	
+
+#wrapper {
+	color: white;
+}
+
+
+.content {
+	box-sizing: border-box;
+	text-align: center;
+	display: block;
+	margin: auto;
+	margin-top: 50px;
+	width: 50%;
+	height: 400px;
+	background: inherit; 
+}
+
+h1 {
+	font-family: 'Cabin Sketch', cursive;
+	font-size: 70px;
+}
+
+#start {
+	    width: 20%;
+    font-size: 40px;
+    border: 2px solid;
+}
+
+footer {
+	color: white;
+}
+
+.clearfix {
+	text-align: center;
+	clear: both;
+}
