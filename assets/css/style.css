@@ -5,6 +5,7 @@ body {
 
 #wrapper {
 	color: white;
+	clear: top;
 }
 
 
@@ -15,7 +16,7 @@ body {
 	margin: auto;
 	margin-top: 50px;
 	width: 50%;
-	height: 400px;
+	height: auto;
 	background: inherit; 
 }
 
