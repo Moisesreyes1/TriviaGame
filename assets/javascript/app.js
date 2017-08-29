@@ -1,7 +1,4 @@
-
-
-
-			// Array for the questions, choices and answers //
+// Array for the questions, choices and answers //
 			var trivia = [
 			{
 				question: "1. Which city has the highest rate of lightning strikes?",
@@ -57,8 +54,8 @@
 
 
 			// Variables at start of game //
-			var rights = 0;
-			var wrongs = 0;
+			var correct = 0;
+			var incorrect = 0;
 			var counter = 100;
 			var clockRunning = false;
 			var timer;
@@ -104,19 +101,26 @@
 		// Click button to start trivia and countdown //
 
 		$(document).on("click", "#start", function(x) {
+
 				
-			start();
+			beginGame();
 		});
 		// Click button when finished all questions before time expires //
-		$(document).on("click", "#done", function(x) {
+		$(document).on("click", "#finish", function(x) {
+			var dataVal = ($(this).attr ("data-questionvalue"));
+			var finish = parseInt(userAnswers);
+
+			console.log($(this).attr("data-questionvalue"));
+			var questionValue = userAnswers;
+			var temp = parseInt(questionValue);
+			questions += temp;
+			console.log(finish);
+			$("#questions").html(questions);
 			stop();
+			clearInterval();
 		});
 
-		// Calling functions //
-		onehundredSeconds();
 		
-		run();
-		decrement();
 		
 //each line should be a sentence, click start and put everything on the screen
 //questions on screen
@@ -124,11 +128,13 @@
     
     $('#start').remove();
 
-
+    // Loop for trivia array //
     for (var i = 0; i < trivia.length; i++) {
+      // Show questions on scree //
       displayTrivia.append('<h2>' + trivia[i].question + '</h2>');
-     
+     // Loop for choices //
       for (var a = 0; a < trivia[i].choices.length; a++) {
+       // Show choices with radio buttons on screen //
         displayTrivia.append('<input type="radio" name="question' + '-' + i + '" value="' + trivia[i].choices[a] + '">' + trivia[i].choices[a]);
       }
     }
@@ -194,10 +200,30 @@
         incorrect++;
       }
     });
+     $.each($("input[name='question-8']:checked"), function() {
+      if ($(this).val() == trivia[8].choices) {
+        correct++;
+      } else {
+        incorrect++;
+      }
+    });
+      $.each($("input[name='question-9']:checked"), function() {
+      if ($(this).val() == trivia[9].choices) {
+        correct++;
+      } else {
+        incorrect++;
+      }
+    });
 };
+userAnswers();
 
-    beginGame();
+	// Calling functions //
+	beginGame();
     finished();
+	onehundredSeconds();
+	run();
+	decrement();
+    
 	//make a loop
 		//make div and put qestion in div
 		//add div to page
@@ -207,7 +233,11 @@
 //Start timer
 
 //User answer questions
-
+function userAnswers () {
+	clearInterval(counter);
+	displayTrivia.append("<h3>Correct Answers: " + correct + "</h3>" );
+	displayTrivia.append("<h3>Incorrect Answers: " + incorrect + "</h3>" );
+}	displayTrivia.append("<h3>Left: " + (trivia.length - (correct + incorrect)) + "</h3>" );
 //If time = 0 before user's done
 //Then check user's answers
 //Show correct and incorrect answer
