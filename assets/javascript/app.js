@@ -58,7 +58,6 @@
 			var incorrect = 0;
 			var counter = 100;
 			var clockRunning = false;
-			var timer;
 			var displayTrivia = $("#questions");
 
 			// Setting timer //
@@ -71,20 +70,14 @@
 			
 			}
 
-			// Start trivia function //
-			// function start () {
-			// 	clock = setInterval(counter, 1000);
-			// 	$("#countdown").prepend("<h2>100</>");
-				
-
-			// }
+			
 
 			// Get countdown to decrease one second at a time //
 			 function run() {
-				intervalID = setInterval(decrement, 1000);
+				var intervalId = setInterval(decrement, 1000);
 			}
 			
-			// Decreement function //
+			// Function to decrease counter //
 			function decrement() {
 				counter--;
 				$("#countdown").html("<h2>" + counter + "</h2>");
@@ -95,39 +88,41 @@
 
 			// Stop function //
 			function stop () {
-				clearInterval(intervalID);
-			}
+				clearInterval(intervalId);
+				clockRunning = false;
+			};
 
 		// Click button to start trivia and countdown //
 
 		$(document).on("click", "#start", function(x) {
-
+			if (!clockRunning) {
+        intervalId = setInterval(counter, 1100);
+        clockRunning = true;
+        console.log(clockRunning);
+        beginGame();
+		
+       
+    }
 				
-			beginGame();
+			
 		});
 		// Click button when finished all questions before time expires //
 		$(document).on("click", "#finish", function(x) {
-			var dataVal = ($(this).attr ("data-questionvalue"));
-			var finish = parseInt(userAnswers);
-
-			console.log($(this).attr("data-questionvalue"));
-			var questionValue = userAnswers;
-			var temp = parseInt(questionValue);
-			questions += temp;
-			console.log(finish);
-			$("#questions").html(questions);
+			displayTrivia.append(userAnswers);
+			console.log(userAnswers);
 			stop();
-			clearInterval();
+
+			
 		});
 
 		
 		
-//each line should be a sentence, click start and put everything on the screen
+
 //questions on screen
   function beginGame() {
     
     $('#start').remove();
-
+    run();
     // Loop for trivia array //
     for (var i = 0; i < trivia.length; i++) {
       // Show questions on scree //
@@ -145,14 +140,14 @@
 
 
     $.each($("input[name='question-0']:checked"), function() {
-      if ($(this).val() == trivia[0].choices) {
+      if ($(this).val() == trivia[0].answer) {
         correct++;
       } else {
         incorrect++;
       }
     });
     $.each($("input[name='question-1']:checked"), function() {
-        if ($(this).val() == trivia[1].choices) {
+        if ($(this).val() == trivia[1].answer) {
         correct++;
       } else {
         incorrect++;
@@ -234,10 +229,20 @@ userAnswers();
 
 //User answer questions
 function userAnswers () {
-	clearInterval(counter);
+	if($(this).val() === trivia.answer) {
+		correct++;
+	}
+	else {
+		incorrect++;
+	}
+
+	
 	displayTrivia.append("<h3>Correct Answers: " + correct + "</h3>" );
 	displayTrivia.append("<h3>Incorrect Answers: " + incorrect + "</h3>" );
-}	displayTrivia.append("<h3>Left: " + (trivia.length - (correct + incorrect)) + "</h3>" );
+	displayTrivia.append("<h3>Left: " + (trivia.length - (correct + incorrect)) + "</h3>" );
+
+};
+
 //If time = 0 before user's done
 //Then check user's answers
 //Show correct and incorrect answer
