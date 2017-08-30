@@ -59,22 +59,23 @@
 			var counter = 100;
 			var clockRunning = false;
 			var displayTrivia = $("#questions");
+			var intervalId;
 
 			// Setting timer //
-			setTimeout(onehundredSeconds, 1000 * 100);
+			// var timer = setTimeout(onehundredSeconds, 1000 * 100);
 
 			// Have element display countdown //
-			function onehundredSeconds () {
+			// function onehundredSeconds () {
 
-				$("#countdown").append("<h2>100</h2>");
+				// $("#countdown").append("<h2>100</h2>");
 			
-			}
+			// }
 
 			
 
 			// Get countdown to decrease one second at a time //
 			 function run() {
-				var intervalId = setInterval(decrement, 1000);
+				 intervalId = setInterval(decrement, 1000);
 			}
 			
 			// Function to decrease counter //
@@ -89,6 +90,7 @@
 			// Stop function //
 			function stop () {
 				clearInterval(intervalId);
+				// clearInterval(timer);
 				clockRunning = false;
 			};
 
@@ -108,8 +110,7 @@
 		});
 		// Click button when finished all questions before time expires //
 		$(document).on("click", "#finish", function(x) {
-			displayTrivia.append(userAnswers);
-			console.log(userAnswers);
+			finished();
 			stop();
 
 			
@@ -123,6 +124,7 @@
     
     $('#start').remove();
     run();
+    decrement();
     // Loop for trivia array //
     for (var i = 0; i < trivia.length; i++) {
       // Show questions on scree //
@@ -137,7 +139,7 @@
     displayTrivia.append('<button id="finish">Finish</button>');
   };
    function finished() {
-
+   	console.log("finished");
 
     $.each($("input[name='question-0']:checked"), function() {
       if ($(this).val() == trivia[0].answer) {
@@ -209,15 +211,18 @@
         incorrect++;
       }
     });
+    displayTrivia.append("<h3>Correct Answers: " + correct + "</h3>" );
+	displayTrivia.append("<h3>Incorrect Answers: " + incorrect + "</h3>" );
+	displayTrivia.append("<h3>Left: " + (trivia.length - (correct + incorrect)) + "</h3>" );
 };
-userAnswers();
+//userAnswers();
 
 	// Calling functions //
-	beginGame();
-    finished();
-	onehundredSeconds();
-	run();
-	decrement();
+	//beginGame();
+    //finished();
+	// onehundredSeconds();
+	// run();
+	// decrement();
     
 	//make a loop
 		//make div and put qestion in div
@@ -229,6 +234,7 @@ userAnswers();
 
 //User answer questions
 function userAnswers () {
+	console.log("userAnswers");
 	if($(this).val() === trivia.answer) {
 		correct++;
 	}
